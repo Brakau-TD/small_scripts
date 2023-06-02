@@ -18,7 +18,10 @@ def konvertiere_dec_zu_hex(dezimalzahl: int|str) -> str:
     return hexadezimalzahl
 
 def konvertiere_dec_zu_dual(dezimalzahl: int|str) -> str:
-    """nimmt eine dezimalzahl und konvertiert sie in eine dualzahl"""
+    """
+    nimmt eine Dezimalzahl als Integer oder String 
+    und konvertiert sie in eine Dualzahl als String
+    """
     try:
         dezimalzahl = int(dezimalzahl)
     except ValueError:
