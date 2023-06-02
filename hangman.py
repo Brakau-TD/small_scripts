@@ -7,6 +7,7 @@ letters_found=[]
 file = open("hangman.txt")
 global word
 word=file.read()
+word = word.lower()
 file.close()
 
 loesung=["" for x in word]
@@ -23,21 +24,20 @@ def make_blanks(buchstabe="",letter=[]):
 
 def guess_a_letter():
     pruefe_loesung(loesung)
-    abfrage=input("\nYou wanna solve the puzzle? [letter, 'solve' or 'exit']? ")
+    abfrage=input("\nYou wanna solve the puzzle? [letter, 'solve [solution]' or 'exit']? ")
     if abfrage.lower()=="exit":
         exit_prg("Oh no!")
-    elif abfrage.lower()=="solve":
-        wort_aufloesen()
+    elif abfrage.lower()[:5]=="solve":
+        wort_aufloesen(abfrage.lower())
     else:
         print("")
         buchstabe=abfrage.lower()[0]
         letter.append(buchstabe)
         make_blanks(buchstabe,letter)
     
-def wort_aufloesen():
-    vorschlag=input("Well.... No, that doesn't sound right! ")
-    if vorschlag.lower()==word:
-        print("That is correct!")
+def wort_aufloesen(vorschlag):
+    if vorschlag.lower()[6:]==word:
+        print(f"{vorschlag.lower()} Was your guess. That is correct!")
         exit_prg("\nYou did very well")
     else:
         print("Hmmmmm")
