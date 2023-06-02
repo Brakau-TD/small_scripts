@@ -76,9 +76,3 @@ def gib_wert_und_rest(zahl, divisor) -> tuple[int, int]:
     wert = zahl // divisor
     rest = zahl % divisor
     return wert, rest
-
-
-print(konvertiere_dec_zu_hex(1278))
-print(konvertiere_dec_zu_dual(1278))
-print(konvertiere_dual_zu_dec("10011111110"))
-print(konvertiere_hex_zu_dec("4FE"))
