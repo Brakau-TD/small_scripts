@@ -1,7 +1,7 @@
 """einfaches Skript um Dezimalzahlen in Hexadezimal umzurechnen"""
 
 
-def konvertiere_dec_zu_hex(dezimalzahl: int) -> hex:
+def konvertiere_dec_zu_hex(dezimalzahl: int|str) -> str:
     """nimmt eine dezimalzahl und konvertiert sie in eine hexadezimalzahl"""
     try:
         dezimalzahl = int(dezimalzahl)
@@ -17,7 +17,7 @@ def konvertiere_dec_zu_hex(dezimalzahl: int) -> hex:
         dezimalzahl //= 16
     return hexadezimalzahl
 
-def konvertiere_dec_zu_dual(dezimalzahl: int) -> bin:
+def konvertiere_dec_zu_dual(dezimalzahl: int|str) -> str:
     """nimmt eine dezimalzahl und konvertiert sie in eine dualzahl"""
     try:
         dezimalzahl = int(dezimalzahl)
@@ -31,7 +31,7 @@ def konvertiere_dec_zu_dual(dezimalzahl: int) -> bin:
         dezimalzahl = wert
     return dualzahl[::-1]
 
-def konvertiere_hex_zu_dec(hexa: str) -> int:
+def konvertiere_hex_zu_dec(hexa: str) -> int|str:
     '''konvertiert eine hexadezimalzahl zu ganzer Zahl'''
     hexadezimalzahl = hexa.upper()
     dezimalzahl = 0
@@ -45,7 +45,9 @@ def konvertiere_hex_zu_dec(hexa: str) -> int:
         dezimalzahl += a*(16**i)
     return dezimalzahl
 
-def konvertiere_dual_zu_dec(dualzahl: str) -> int:
+
+
+def konvertiere_dual_zu_dec(dualzahl: str) -> int|str:
     '''konvertiert eine dualzahl zu ganzer Zahl'''
     wert, ergebnis = 0,0
     for i, number in enumerate(dualzahl[::-1]):
@@ -54,6 +56,7 @@ def konvertiere_dual_zu_dec(dualzahl: str) -> int:
         wert = int(number)*(2**i)
         ergebnis += wert
     return ergebnis
+
 
 def konvertiere_dual_zu_hex(dualzahl: str) -> str:
     '''konvertiert eine dualzahl zu hexadezimalzahl'''

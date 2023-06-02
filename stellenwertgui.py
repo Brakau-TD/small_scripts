@@ -20,7 +20,7 @@ class StellenwertGui:
         self.create_gui_elements()
         self._app.mainloop()
 
-    def create_frames(self) -> dict:
+    def create_frames(self):
         self._left_frame = Frame(self._app)
         self._left_frame.pack(side=LEFT)
         self._right_frame = Frame(self._app)
@@ -59,7 +59,7 @@ class StellenwertGui:
             return False
         return l
 
-    def rechne_werte_um(self, auswahl) -> str:
+    def rechne_werte_um(self, auswahl):
         wert = self._zahl.get()
         match auswahl:
             case "dezimal zu hexadezimal":
@@ -74,10 +74,11 @@ class StellenwertGui:
                 ergebnis = konvertiere_dual_zu_dec(wert)
             case "dual zu hexadezimal":
                 ergebnis = konvertiere_dual_zu_hex(wert)
+            case _:
+                ergebnis = "Fehler"
         self._clear_gui()
         self._gui_elements["Output"].insert(END, ergebnis)
                       
-
 
     def _clear_gui(self):
         self._gui_elements["Output"].delete(0.0, END)
