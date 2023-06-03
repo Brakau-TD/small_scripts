@@ -30,6 +30,13 @@ protected_column = {
     9: [2,5,8]
 }
 
+# coordinates are [line][column]
+# on a 2D array
+protected_coordinates = [
+    [[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]],
+    [[3,3],[3,4],[3,5],[4,3],[4,4],[4,5],[5,3],[5,4],[5,5]],
+    [[6,6],[6,7],[6,8],[7,6],[7,7],[7,8],[8,6],[8,7],[8,8]]
+]
 
 class CreateInitialBoard:
     def __init__(self):
@@ -37,52 +44,45 @@ class CreateInitialBoard:
         self.sudoku = debug_sudoku
         self.board = OutputBoard()
         self.board.set_sudoku(self.sudoku)
-        self.remove_duplicates_in_line()
-        self.remove_duplicates_in_column()
+        self.clean_up_initial_lines()
+        print(self.sudoku)
 
 
-    def remove_duplicates_in_line(self):
-        '''finds identical numbers in the sudoku'''
+    def clean_up_initial_lines(self):
+        '''finds identical numbers in the sudoku and replaces them with 0'''
         board = self.board.create_sudoku_lines().copy()
         for l,line in enumerate(self.board.create_sudoku_lines()):
             duplicate = []
             for i,item in enumerate(line):
-                if item not in duplicate:
+                if item not in duplicate and self.check_if_protected([l,i]):
                     duplicate.append(item)
+                elif item not in duplicate and self.check_if_protected([l,i]) == False:
+                    duplicate.append(item)
+                elif item in duplicate and self.check_if_protected([l,i]) == True:
+                    location = line.index(item)
+                    board[l][location] = 0 if [l,location] != [l,i] else None
                 else:
-                    if i in protected_line[l+1]:
-                        continue
-                    else:
-                        board[l][i] = 0
-        for line in board:
-            print(line)
+                    board[l][i] = 0
+        self.sudoku = board
         print()
     
-    def remove_duplicates_in_column(self):
+    def clean_up_initial_columns(self):
+        '''finds duplicates in the columns and replaces them with 0'''
+        board = self.board.create_sudoku_lines().copy()
+        for c,column in enumerate(board):
+            column_duplicates = []
+            pass
+            for line in range(0,9):
+                pass
+    
+    def check_if_protected(self, coordinate: list):
         '''finds identical numbers per column'''
         board = self.board.create_sudoku_lines().copy()
-        for column in range(9):
-            protected_values = [board[line][column] for line in protected_column[column+1]]
-            print(protected_values)
-            duplicate = []
-            for line in range(9):
-                if board[line][column] not in duplicate and column in protected_column[column+1]:
-                    duplicate.append(board[line][column])
-                else:
-                    board[line][column] = 0
-        for line in board:
-            print(line)
+        for line in protected_coordinates:
+            if coordinate in line:
+                return True
+        return False
     
-    def create_protected_values(self, pos_line, pos_column, pos_box):
-        '''creates a list of values that are protected from being changed'''
-        protected_values = []
-        for line in protected_line[pos_line]:
-            for column in protected_column[pos_column]:
-                protected_values.append(self.sudoku[line][column][pos_box])
-        return protected_values
-    
-
-
 
     def create_sudoku_board(self) -> list:
         '''creates a 9x9 array of empty lists'''
