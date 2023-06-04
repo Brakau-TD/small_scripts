@@ -94,6 +94,7 @@ class CreateInitialBoard:
             for column in range(0,3):
                 boxes.append(my_sudoku[line][column*3:(column*3)+3])
         for slice in range(len(boxes)//3):
+            print(f"slice {slice}")
             tiny_boxes = []
             tiny_boxes.extend(boxes[slice])
             tiny_boxes.extend(boxes[slice+3])
@@ -105,10 +106,14 @@ class CreateInitialBoard:
     
     def find_duplicate_in_box(self, box: list):
         '''goes through each box and removes duplicates'''
-        pn = self.possible_numbers.copy()
+        duplicate_dict = {}
+        duplicate_store = []
         for b, box in enumerate(box):
-            duplicate_dict = dict(Counter(box))
-            print(duplicate_dict)
+            duplicate_dict[b] = dict(Counter(box))
+            for key in duplicate_dict[b]:
+                if duplicate_dict[key] >=2:
+                    print(1)
+        # print(duplicate_store)
 
 
 
