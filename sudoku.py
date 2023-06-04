@@ -11,10 +11,22 @@ debug_sudoku = [
 
 # coordinates are [line][column]
 # on a 2D array
-protected_coordinates = [
+protected_coordinates_3D = [
     [[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]],
     [[3,3],[3,4],[3,5],[4,3],[4,4],[4,5],[5,3],[5,4],[5,5]],
     [[6,6],[6,7],[6,8],[7,6],[7,7],[7,8],[8,6],[8,7],[8,8]]
+]
+
+protected_coordinates_2D = [
+    [0,1,2],
+    [0,1,2],
+    [0,1,2],
+    [3,4,5],
+    [3,4,5],
+    [3,4,5],
+    [6,7,8],
+    [6,7,8],
+    [6,7,8]
 ]
 
 
@@ -33,7 +45,9 @@ class CreateInitialBoard:
         sudoku_temp = self.fill_blanks(sudoku)
         self.board.print_sudoku(sudoku_temp, "Filled Sudoku")
         sudoku_temp = self.nine_boxes(sudoku_temp)
-        duplicate_store = self.find_duplicate_in_box(sudoku_temp)
+        duplicate_store, boxes = self.find_duplicate_in_box(sudoku_temp)
+        boxes = self.remove_duplicates_from_box(duplicate_store, boxes)
+        self.board.print_sudoku(boxes, "Boxes")
 
     def clean_up_initial_sudoku(self, my_sudoku: list):
         '''finds identical numbers in the sudoku and replaces them with 0'''
@@ -84,7 +98,10 @@ class CreateInitialBoard:
         return choices
     
     def nine_boxes(self, my_sudoku: list):
-        '''finds identical numbers per box'''
+        '''
+        finds identical numbers per box
+        one line represents one box
+        '''
         boxes = []
         final_boxes = []
         for line in range(0,9):
@@ -100,12 +117,12 @@ class CreateInitialBoard:
         self.board.print_sudoku(final_boxes, "Nine Boxes")
         return final_boxes
     
-    def find_duplicate_in_box(self, box: list):
+    def find_duplicate_in_box(self, boxes: list):
         '''goes through each box and removes duplicates'''
         duplicate_dict = {}
         duplicate_store = {k:[1 for v in range(9)] for k in range(9)}
         print()
-        for b, box in enumerate(box):
+        for b, box in enumerate(boxes):
             duplicate_dict[b] = dict(Counter(box))
             for key in duplicate_dict[b]:
                 if duplicate_dict[b][key] >=2:
@@ -113,12 +130,37 @@ class CreateInitialBoard:
         for key in duplicate_store:
             print(duplicate_store[key])
         print()
-        return duplicate_store
+        return duplicate_store, boxes
+    
+    def remove_duplicates_from_box(self, duplicate_store, boxes):
+        '''finds numbers for duplicate entries'''
+        protected_lines = [0,4,8]
+        print(boxes)
+        for key in duplicate_store:
+            if key in protected_lines:
+                continue
+            for n, number in enumerate(duplicate_store[key]):
+                if number > 1:
+                    print(f'box is {boxes[key][n]}')
+                    boxes[key][n] = self.get_possible_numbers_in_box(number, boxes[key])
+                    print(f'box {boxes[key][n]} after change')
+        return boxes
+
+    def get_possible_numbers_in_box(self, number, line: list) -> int:
+        '''checks for a possible number in a box'''
+        choose_from = []
+        for item in self.possible_numbers:
+            if item in line:
+                pass
+            else:
+                choose_from.append(item)
+        number = random.choice(choose_from)
+        return number
 
     def check_if_protected(self, coordinate: list):
         '''finds identical numbers per column'''
         board = self.board.create_sudoku_lines(self.sudoku).copy()
-        for line in protected_coordinates:
+        for line in protected_coordinates_3D:
             if coordinate in line:
                 return True
         return False
