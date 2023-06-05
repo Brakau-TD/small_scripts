@@ -135,7 +135,6 @@ class CreateInitialBoard:
     def remove_duplicates_from_box(self, duplicate_store, boxes):
         '''finds numbers for duplicate entries'''
         protected_lines = [0,4,8]
-        print(boxes)
         for key in duplicate_store:
             if key in protected_lines:
                 continue
