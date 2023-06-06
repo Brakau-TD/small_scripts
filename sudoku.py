@@ -58,6 +58,10 @@ class CreateInitialBoard:
         nine_boxes = self.create_boxes(self.sudoku.copy())
         clean_boxes = self.clean_up_boxes(nine_boxes.copy())
         self.board.print_sudoku(clean_boxes, "clean boxes")
+        filled_boxes = self.fill_blanks(clean_boxes.copy())
+        self.board.print_sudoku(filled_boxes, "filled boxes")
+        sudoku_proper_rotation = self.board.revert_to_sudoku_lines(filled_boxes.copy())
+        self.board.print_sudoku(sudoku_proper_rotation, "proper rotation")
         return sudoku_proper_rotation
 
     def clean_up_initial_sudoku(self, my_sudoku: list):
@@ -158,6 +162,36 @@ class CreateInitialBoard:
         if i in protected_coordinates_2D[l]:
             return True
         return False
+
+    def bloody_shitty_fuckface(self):
+        complex = [
+            [[8, 1, 5], [9, 2, 4], [6, 3, 8], [2, 5, 9], [4, 1, 7], [7, 2, 3], [3, 8, 4], [6, 8, 2], [9, 4, 5]],
+            [[6, 2, 7], [3, 7, 1], [4, 5, 9], [6, 4, 8], [8, 3, 5], [6, 1, 9], [5, 9, 1], [5, 1, 3], [7, 8, 6]],
+            [[9, 3, 4], [6, 5, 8], [1, 7, 2], [1, 7, 3], [2, 9, 6], [5, 8, 4], [7, 6, 2], [7, 4, 9], [2, 3, 1]]
+            ]
+            
+        temp = []
+        t = []
+        final = []
+
+        # item for sublist in l for item in sublist
+        for loop in range(3):
+            for l,line in enumerate(complex):
+                temp = complex[l][loop*3:loop*3+3]
+                t.append(temp)
+            final.append(t)
+            t = []
+        finalline = []
+        endline = []
+        for line in final:
+            for sublist in line:
+                finalline.extend(sublist)
+            endline.extend(finalline)
+            finalline = []
+
+        for i in endline:
+            print(i)
+
     
 
 class OutputBoard:
@@ -205,17 +239,17 @@ class OutputBoard:
             new_list.append([line[i] for line in sudoku_lines])
         return new_list
     
-    def revert_to_sudoku_lines(self, sudoku: list) -> list[list]:
+    def revert_to_sudoku_lines(self, boxlists: list):
         '''prepares a list of lists to print the sudoku numbers per line'''
-        sudoku_line = []
-        sudoku_lines = []
-        for line in sudoku:
-            for i in range(3):
-                for box in line:
-                    sudoku_line.extend(box[i])
-                sudoku_lines.append(sudoku_line)
-                sudoku_line = []
-        return sudoku_lines
+        linie = []
+        ergebnis = []
+        for i in range(0,9,3):
+            for line in range(9):
+                linie.append(boxlists[line][i:i+3])
+            ergebnis.append(linie)
+            linie = []
+        return ergebnis
+
         
     def print_sudoku(self, sudoku:list, text:str=""):
         '''prints the sudoku'''
@@ -226,3 +260,4 @@ class OutputBoard:
     
 
 su = CreateInitialBoard()
+su.bloody_shitty_fuckface()
