@@ -1,7 +1,6 @@
 '''sudoku'''
 import random
 from collections import Counter
-import sys
 
 debug_sudoku = [
     [8,1,5,3,9,7,5,7,6],
@@ -29,17 +28,15 @@ protected_coordinates_2D = [
 
 
 class CreateInitialBoard:
-    def __init__(self):
+    def __init__(self, schwierigkeit):
         self.possible_numbers = list(range(1,10))
         self.board = OutputBoard()
         # self.sudoku = self.board.create_sudoku_board()
         self.sudoku = debug_sudoku # for debugging
 
         self.sudoku = self.construct_first_draft(self.sudoku.copy())
-        
-        # sudoku_box_lines = self.nine_boxes(sudoku_temp.copy())
-        # duplicate_store, boxes = self.find_duplicate_in_box(sudoku_temp.copy())
-        # boxes = self.remove_duplicates_from_box(duplicate_store, boxes)
+        self.board.print_sudoku(self.sudoku)
+        self._schwierigkeit = schwierigkeit
     
     def construct_first_draft(self, sudoku):
         '''
@@ -57,12 +54,10 @@ class CreateInitialBoard:
 
         nine_boxes = self.create_boxes(self.sudoku.copy())
         clean_boxes = self.clean_up_boxes(nine_boxes.copy())
-        self.board.print_sudoku(clean_boxes, "clean boxes")
         filled_boxes = self.fill_blanks(clean_boxes.copy())
-        self.board.print_sudoku(filled_boxes, "filled boxes")
         sudoku_proper_rotation = self.board.revert_to_sudoku_lines(filled_boxes.copy())
-        self.board.print_sudoku(sudoku_proper_rotation, "proper rotation")
-        return sudoku_proper_rotation
+        normal_view = self.create_normal_view(sudoku_proper_rotation)
+        return normal_view
 
     def clean_up_initial_sudoku(self, my_sudoku: list):
         '''finds identical numbers in the sudoku and replaces them with 0'''
@@ -163,35 +158,17 @@ class CreateInitialBoard:
             return True
         return False
 
-    def bloody_shitty_fuckface(self):
-        complex = [
-            [[8, 1, 5], [9, 2, 4], [6, 3, 8], [2, 5, 9], [4, 1, 7], [7, 2, 3], [3, 8, 4], [6, 8, 2], [9, 4, 5]],
-            [[6, 2, 7], [3, 7, 1], [4, 5, 9], [6, 4, 8], [8, 3, 5], [6, 1, 9], [5, 9, 1], [5, 1, 3], [7, 8, 6]],
-            [[9, 3, 4], [6, 5, 8], [1, 7, 2], [1, 7, 3], [2, 9, 6], [5, 8, 4], [7, 6, 2], [7, 4, 9], [2, 3, 1]]
-            ]
-            
-        temp = []
-        t = []
+    def create_normal_view(self, proper_rotation):
+        """takes the proper rotation and transforms it into a nine-line-view"""
         final = []
-
-        # item for sublist in l for item in sublist
-        for loop in range(3):
-            for l,line in enumerate(complex):
-                temp = complex[l][loop*3:loop*3+3]
-                t.append(temp)
-            final.append(t)
-            t = []
-        finalline = []
-        endline = []
-        for line in final:
-            for sublist in line:
-                finalline.extend(sublist)
-            endline.extend(finalline)
-            finalline = []
-
-        for i in endline:
-            print(i)
-
+        for metacolumn in (0,3,6):
+            for line in range(3):
+                newline = []
+                for column in range(3):
+                    newline.extend(proper_rotation[line][column+metacolumn])
+                final.append(newline)
+                newline = []
+        return final
     
 
 class OutputBoard:
@@ -259,5 +236,3 @@ class OutputBoard:
         print()
     
 
-su = CreateInitialBoard()
-su.bloody_shitty_fuckface()
