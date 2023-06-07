@@ -1,4 +1,5 @@
 '''sudoku'''
+import pygame
 import random
 from collections import Counter
 
