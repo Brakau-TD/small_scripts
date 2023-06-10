@@ -5,11 +5,12 @@
 import requests
 import json
 from abc import ABC, abstractmethod
+from api_key import api_key
 
 class RandomOrg(ABC):
     def __init__(self):
         self.response_data: list
-        self.api_key: str = "407922a8-beb5-4184-9da4-0549cd2a0a90"
+        self.api_key: str = api_key
     
     @abstractmethod
     def connect_to_api(self):
