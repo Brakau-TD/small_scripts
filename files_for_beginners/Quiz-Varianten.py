@@ -46,4 +46,4 @@ for key in quiz:
         print("Richtig!")
         punkte+=1
     else:
-		print("leider falsch")
+	    print("leider falsch")
