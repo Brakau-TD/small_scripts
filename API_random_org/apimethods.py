@@ -22,7 +22,7 @@ from api_key import api_key
 class ApiMethods:
     '''handles construction of the json-rpc request'''
     def __init__(self):
-        self.api_dict: dict
+        self.api_dict: dict = {}
         self.api_key: str = api_key
 
     def construct_api_dict(self,method: str) -> str|bool:
