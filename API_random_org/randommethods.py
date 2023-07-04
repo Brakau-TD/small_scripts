@@ -17,6 +17,8 @@ https://api.random.org/json-rpc/4/basic
 from apimethods import ApiMethods, ApiRequest
 
 
+
+
 class RandomValues:
     def __init__(self):
         '''

@@ -51,7 +51,7 @@ def dictionary_zu_liste(new_list):
 def vokabeln_laden():
     """Hier wird eine Vokabelliste aus einer csv-Datei geladen"""
     listenzeilen = []
-    with open("vokabelliste1.csv", mode="r", encoding="utf-8-sig") as vokabelliste:
+    with open("vokabelliste.csv", mode="r", encoding="utf-8-sig") as vokabelliste:
         vokabeln = [item for item in csv.reader(vokabelliste, delimiter=";")]
     for line in vokabeln:
         a = line.pop(0)
