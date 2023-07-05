@@ -1,4 +1,3 @@
-from userinterface import UserInterface
 import shutil
 import os
 
@@ -149,6 +148,7 @@ class FileOperations:
                     os.remove(folder+file)
                     deletedfiles.append(folder+file)
         return f"Removed: {folder+file}" if len(deletedfiles) > 0 else "No files removed"
+
 
         
 def main() -> None:

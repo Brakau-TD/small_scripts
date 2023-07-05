@@ -1,0 +1,83 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyArgumentEqualDefaultInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyAugmentAssignmentInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyClassicStyleClassInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyGlobalUndefinedInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyMandatoryEncodingInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyMissingOrEmptyDocstringInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyMissingTypeHintsInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="W605" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N806" />
+          <option value="N803" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="project_files.classroom_assistant_gui.GuiActions.*" />
+          <option value="object.get_fire_threshold" />
+          <option value="object.fire_threshold" />
+          <option value="object.get_rect" />
+          <option value="object.handle_boss_bullet" />
+          <option value="object.spawn_bullet" />
+          <option value="object.make_star_formation" />
+          <option value="object.move_bullet_from_list" />
+          <option value="object.human" />
+          <option value="object.levelbulletlist" />
+          <option value="object.get_center" />
+          <option value="object.get_bullets_on_screen" />
+          <option value="object.get_max_bullets" />
+          <option value="object.get_who_is" />
+          <option value="object.get_bullet_direction" />
+          <option value="object.general" />
+          <option value="object.get_pos" />
+          <option value="object.width" />
+          <option value="object.create_fx_vector" />
+          <option value="object.kill" />
+          <option value="object.mine_pos" />
+          <option value="object.mini_mine_explosion" />
+          <option value="object.small_explosion" />
+          <option value="object.fc" />
+          <option value="object.x" />
+          <option value="object.y" />
+          <option value="object.og_y" />
+          <option value="object.image" />
+          <option value="object.rot_image" />
+          <option value="object.angle_correction" />
+          <option value="object.grace_period" />
+          <option value="bool.pos_list" />
+          <option value="bool.who_is" />
+          <option value="object.velocity" />
+          <option value="object.MIN_X" />
+          <option value="object.MAX_X" />
+          <option value="object.MAX_Y" />
+          <option value="object.pos_list" />
+          <option value="object.tracing" />
+          <option value="tuple.copy" />
+          <option value="object.height" />
+          <option value="object.direction" />
+          <option value="object.level" />
+          <option value="object.get_level" />
+          <option value="list.get_formation_bullet_direction" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="SpellCheckingInspection" enabled="false" level="TYPO" enabled_by_default="false">
+      <option name="processCode" value="true" />
+      <option name="processLiterals" value="true" />
+      <option name="processComments" value="true" />
+    </inspection_tool>
+  </profile>
+</component>
