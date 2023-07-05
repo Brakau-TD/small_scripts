@@ -30,7 +30,7 @@ class AppGui:
             "title": "My App",
             "description": "This is my app. It does something.",
             "width": 480,
-            "height": 480,
+            "height": 600,
             "padx": 10,
             "pady": 10,
         }
@@ -63,16 +63,19 @@ class AppGui:
         """
         self.radio = tk.IntVar()
         self.radio.set(1)
+        self._toplabel = tk.StringVar(value = "Top-Label")
+        self._rightlabel = tk.StringVar(value = "Right-Label")
         gui_elements = {
             "Labels": {
                 "L1": tk.Label(
-                    self._top_frame, text="Top-Frame description", justify="left"
+                    self._top_frame, justify="left",
+                    textvariable = self._toplabel
                 ),
                 "L2": tk.Label(
                     self._left_frame, text="Left-Frame description", justify="left"
                 ),
                 "L3": tk.Label(
-                    self._right_frame, text="Right-Frame description", justify="right"
+                    self._right_frame, textvariable=self._rightlabel, justify="right"
                 ),
                 "L4": tk.Label(
                     self._bottom_frame, text="Bottom-Frame description", justify="right"
@@ -115,10 +118,10 @@ class AppGui:
                 ),
             },
             "Listboxes": {
-                "L3": tk.Listbox(
+                "L": tk.Listbox(
                     self._right_frame,
                     listvariable=self.listboxvariable,
-                    height=5,
+                    height=20,
                     width=30,
                     selectmode="single",
                     bg="gold"
@@ -148,6 +151,7 @@ class AppGui:
             f'{self._information["width"]}x{self._information["height"]}'
         )
         self.listboxvariable = tk.StringVar(value=self.items)
+
         self.create_frames()
         self.create_gui_elements()
         self._clear_gui()
@@ -201,6 +205,15 @@ class AppGui:
             )
             self.all_elements[key] = value
 
+        self.all_elements["L"].bind("<<ListboxSelect>>", self.onselect)
+        #self.all_elements["L3"]
+
+    def onselect(self, event):
+        print("onselect")
+        self._rightlabel.set(self.allcontent[
+            self.all_elements["L"].curselection()[0]]
+        )
+
     def menu(self, choice: str):
         """
         diese Methode verzweigt je nach Button der gedrückt wurde
@@ -247,10 +260,10 @@ class AppGui:
         """
         self._clear_gui(["Text"])
         self.all_elements["T1"].insert("end", self._text_variables[0].get())
-        dircontent = self.hp.read_folder(self._text_variables[0].get())
-        print(dircontent)
+        self.allcontent = self.hp.get_folders(self._text_variables[0].get())
+        print(self.allcontent)
         self._clear_gui(["Listboxes"])
-        self.listboxvariable = tk.Variable(value=dircontent)
+        self.listboxvariable.set(self.allcontent)
 
         #self.all_elements["L3"].insert("end", dircontent)
 
