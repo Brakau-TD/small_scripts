@@ -8,7 +8,7 @@ RED = (255, 0, 0)
 ORANGE = (255, 197, 82)
 class UserEvents:
     def __init__(self):
-
+        pass
     def keydown_colors(self, event, color):
         if event.key == pygame.K_b:
             color = BLUE
