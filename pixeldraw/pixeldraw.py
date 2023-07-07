@@ -4,6 +4,15 @@ from pygame import mouse
 pygame.init()
 from palettecolors import palettecolors
 
+WHITE = (255, 255, 255)
+BLUE = (0, 0, 255)
+BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
+ORANGE = (255, 197, 82)
+global color
+color = BLACK
+
 tools = [
     pygame.image.load("eraser.png"),
     pygame.image.load("save2.png"),
@@ -18,6 +27,7 @@ selected =[
     pygame.image.load("eraserselected.png")
 
 ]
+
 
 
 class DrawCanvas():
@@ -54,12 +64,7 @@ class DrawCanvas():
     def drawcanvas(self, items: list):
         self.screen.blit(self.bg, (0, 0))
         # pointer_rect = pygame.Rect(pygame.mouse.get_pos(), (20, 20))
-        WHITE = (255, 255, 255)
-        BLUE = (0, 0, 255)
-        BLACK = (0, 0, 0)
-        GREEN = (0, 255, 0)
-        RED = (255, 0, 0)
-        ORANGE = (255, 197, 82)
+
         colors = []
         color = BLACK
         linestart = []
@@ -67,6 +72,7 @@ class DrawCanvas():
         linelist = []
         state = "pixel"
         indices = []
+        shot = False
         running = True
         while running == True:
             self.screen.blit(self.bg, (0, 0))
@@ -91,6 +97,7 @@ class DrawCanvas():
                     elif event.key == pygame.K_o:
                         color = ORANGE
 
+                lr_mp = ((mousepos[0] // 20) * 20, (mousepos[1] // 20) * 20)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1 and mousepos[1] < 20:
                         color = palettecolors[mousepos[0] // 20]
@@ -103,6 +110,8 @@ class DrawCanvas():
                         elif 0 < mousepos[0] < 20 and state == "erase":
                             state = "pixel"
                             self.tools[0] = self.deselected[0]
+                        elif 20<=mousepos[0]<=40:
+                            shot = True
                     elif event.button == 1 and state == "erase":
                         try:
                             pixelindex = indices.index(((mousepos[0] // 20) * 20, (mousepos[1] // 20) * 20))
@@ -110,6 +119,13 @@ class DrawCanvas():
                             items.pop(pixelindex)
                             indices.pop(pixelindex)
                         except ValueError as e:
+                            print(e)
+                        try:
+                            print("in line")
+                            for i,line in enumerate(linelist):
+                                if lr_mp == line[0] or lr_mp == line[1]:
+                                    linelist.pop(i)
+                        except IndexError as e:
                             print(e)
                     elif event.button == 1 and state == "pixel":
                         items.append(pygame.Rect(((mousepos[0] // 20) * 20, (mousepos[1] // 20) * 20), (20, 20)))
@@ -136,6 +152,9 @@ class DrawCanvas():
                 pygame.draw.line(self.screen, line[2], line[0], line[1], 20)
             self.drawcolorpalette()
             self.drawtools()
+            if shot == True:
+                pygame.image.save(self.screen, "screenshot.png")
+                shot = False
 
             # Update the display
             pygame.display.flip()
