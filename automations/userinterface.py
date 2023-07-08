@@ -9,4 +9,5 @@ class UserInterface:
             if name == "":
                 break
             folders.append(name)
+        folders.insert(0, "back one level")
         return folders
